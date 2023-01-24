@@ -1,14 +1,46 @@
-/** {
+* {
     margin: 0;
     border: 0;
-    background-image: url("forecast.jpg");
-    color: white;
 }
 
-.input
- margin: 10px;
+body{
+    background-image: url("forecast_medium_size.jpg");
+    color: white;
+    background-position: center center;
+    background-repeat: no-repeat;
+   
+}
+
+
+div{
+    height: 300px;
+    width: 50%;
+   
+    margin-top: 25vh;
+    margin-left: 55vh;
+   
+    border: rgb(24, 0, 21) 1px solid;
+    background-color: rgb(76, 1, 59);
+    opacity: 0.85;
+    border-radius: 20px;
+
+    position: relative;
+
+}
+
+label{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+input{
+    top: 20px;
+    left: 140px;
+
     background-color: white;
     color: black;
-    
-*/
+    position: absolute; 
+}
+
 
