@@ -5,7 +5,8 @@ let rootElement2 = document.getElementById("root2");
 
 let cities;
 let DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
+let favourites = [];
+let currentCity;
 
 const loadEvent = function() {
 
@@ -25,6 +26,13 @@ const loadEvent = function() {
     rootElement.insertAdjacentHTML("beforeend", `<label>Choose a city</label>`)
     rootElement.insertAdjacentHTML("beforeend", `<input id="input" list="datalist">`)
     rootElement.insertAdjacentHTML("beforeend", `<datalist id="datalist">`)
+    rootElement.insertAdjacentHTML("beforeend", `<button id="favourites">Add city to favourites</button>`)
+    document.getElementById("favourites").style.visibility = "hidden";
+    rootElement.insertAdjacentHTML("beforeend", `<div hidden id="spinner"></div>`)
+
+    const spinner = document.getElementById("spinner"); 
+
+  // Display the fetched data in the Browser
 
       const displayData = (data) =>{
         rootElement2.insertAdjacentHTML('beforeend', `<p id="cityName">${data.location.name}</p>`);
@@ -34,8 +42,19 @@ const loadEvent = function() {
         rootElement2.insertAdjacentHTML('beforeend', `<p id="localtime">${data.location.localtime}</p>`);
         rootElement2.insertAdjacentHTML('beforeend', `<p id="windSpeed">${data.current["wind_kph"]}</p>`);
         rootElement2.insertAdjacentHTML('beforeend', `<p id="day">${DAYS[addWeekday(data.location.localtime.slice(0, 10))]}</p>`);
-
       }
+
+  // Loading time spinner
+  function loadSpinner() {
+    spinner.removeAttribute('hidden');
+    fetch('https://www.mocky.io/v2/5185415ba171ea3a00704eed?mocky-delay=2000ms')
+      .then(response => response.json())
+      .then(data => {
+        spinner.setAttribute('hidden', '');
+        console.log(data)
+      });
+  }
+
 
   // Get the actual day of the week
   let addWeekday = (str) =>{
@@ -52,9 +71,9 @@ const loadEvent = function() {
           }})
           .then(response=>response.json())
           .then(data=>{   
-            if (data.photos.length > 0){    
-            rootElement.style.backgroundImage = `url("${data.photos[0].src.portrait}")`;
-            } else {rootElement.style.backgroundImage = `url("forecast_medium_size.jpg")`;}
+            (data.photos.length > 0) ?    
+            rootElement.style.backgroundImage = `url("${data.photos[0].src.portrait}")`
+             : rootElement.style.backgroundImage = `url("forecast_medium_size.jpg")`;
           })
         }catch(error){
           console.log(error)
@@ -68,7 +87,7 @@ const loadEvent = function() {
           .then(response=>response.json())
           .then(data=>{           
             console.log(data);
-            displayData(data);
+            setTimeout(displayData, 2000, data);
           })
         }catch(error){
           console.log(error)
@@ -97,7 +116,7 @@ const loadEvent = function() {
       }
       
 
-  //
+  // Input field autocomplete feature
        document.getElementById("input").addEventListener('keyup', (e) => {
         for (let i = 97; i <= 122; i++){
           if(document.getElementById("input").value.length >= 3 && e.key.charCodeAt(0) === i ){
@@ -108,19 +127,26 @@ const loadEvent = function() {
         }
       })
       
-  //   
+      // Fetch the weather data and load it to the HTML, favourites button visible, put favourites as options in the datalist 
       document.getElementById("input").addEventListener('change', (e) => {
-          for(let city of cities){
-            if(city.name === e.target.value){
-              rootElement2.textContent = "";
-              fetchCityData(city.name);
-              fetchBackgroundPicture(city.name);
-              document.querySelectorAll('option').forEach(option => option.remove())
-            }
-          }      
+        for(let city of cities){
+          if(city.name === e.target.value){
+            rootElement2.textContent = "";
+            loadSpinner();
+            fetchCityData(city.name);
+            fetchBackgroundPicture(city.name);
+            currentCity = city.name;
+            document.getElementById("favourites").style.visibility = "visible";
+          }
+        }      
+        if (document.getElementById("input").value.length === 0 && favourites.length !== 0){
+          favourites.forEach(element => {
+            document.getElementById("datalist").insertAdjacentHTML("beforeend", `<option id="${element}" value="${element}">`)
+          });
+        }
       });
         
-  //     
+  // Delete option elements from the datalist if there are lesser then 3 characters in the input field    
       addEventListener('keyup', function(event) {
         const key = event.key;
           if ((key === "Backspace" || key === "Delete") && document.getElementById("input").value.length < 3) {
@@ -128,7 +154,16 @@ const loadEvent = function() {
           }
       });  
 
-    
+  // Add actual city to favourites if button is pressed
+    document.getElementById("favourites").addEventListener('click', () => {
+      if(!favourites.includes(currentCity)){
+      favourites.push(currentCity);
+      console.log(favourites);
+      }
+    })
+
+
+  //
 }
 
 
