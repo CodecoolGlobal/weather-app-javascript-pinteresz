@@ -149,16 +149,16 @@ const loadEvent = function() {
           }
         }  
       }    
-        if (document.getElementById("input").value.length === 0 && favourites.length !== 0){
-          favourites.forEach(element => {
-            document.getElementById("datalist").insertAdjacentHTML("beforeend", `<option id="${element}" value="${element}">`)
-          });
-        }
       });
         
   // Delete option elements from the datalist if there are lesser then 3 characters in the input field    
       addEventListener('keyup', function(event) {
         const key = event.key;
+        if (document.getElementById("input").value.length === 0 && favourites.length !== 0){
+          favourites.forEach(element => {
+            document.getElementById("datalist").insertAdjacentHTML("beforeend", `<option id="${element}" value="${element}">`)
+          });
+        } else
           if ((key === "Backspace" || key === "Delete") && document.getElementById("input").value.length < 3) {
             document.querySelectorAll('option').forEach(option => option.remove())
           }
