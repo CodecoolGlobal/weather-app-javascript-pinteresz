@@ -35,12 +35,13 @@ const loadEvent = function() {
   // Display the fetched data in the Browser
 
       const displayData = (data) =>{
-        rootElement2.insertAdjacentHTML('beforeend', `<p id="cityName">${data.location.name}</p>`);
+        rootElement2.insertAdjacentHTML('beforeend', `<p id="cityName">${data.location.name.toUpperCase()}</p>`);
         rootElement2.insertAdjacentHTML('beforeend', `<p id="temperature">${data.current["temp_c"]} °C</p>`);
         rootElement2.insertAdjacentHTML('beforeend', `<p id="condition">${data.current.condition.text}</p>`);
         rootElement2.insertAdjacentHTML('beforeend', `<img id="icon" src="${data.current.condition.icon}"></img>`);
         rootElement2.insertAdjacentHTML('beforeend', `<p id="localtime">${data.location.localtime}</p>`);
         rootElement2.insertAdjacentHTML('beforeend', `<p id="windSpeed">${data.current["wind_kph"]}</p>`);
+        rootElement2.insertAdjacentHTML('beforeend', `<img id="windPic" src="wind.jpg"></img>`);
         rootElement2.insertAdjacentHTML('beforeend', `<p id="day">${DAYS[addWeekday(data.location.localtime.slice(0, 10))]}</p>`);
       }
 
