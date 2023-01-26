@@ -155,6 +155,7 @@ const loadEvent = function() {
       addEventListener('keyup', function(event) {
         const key = event.key;
         if (document.getElementById("input").value.length === 0 && favourites.length !== 0){
+          document.querySelectorAll('option').forEach(option => option.remove())
           favourites.forEach(element => {
             document.getElementById("datalist").insertAdjacentHTML("beforeend", `<option id="${element}" value="${element}">`)
           });
