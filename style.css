@@ -1,7 +1,7 @@
 * {
     margin: 0;
     border: 0;
-    font: Helvetica, Arial, sans-serif;
+    font-family: "Trebuchet MS", Tahoma, Helvetica, sans-serif;
 }
 
 body{
@@ -21,6 +21,7 @@ body{
     background-image: url("forecast_medium_size.jpg");
     background-clip: padding-box;
     background-position: center center;
+
     border-radius: 20px;
 
     position: relative;   
@@ -62,7 +63,7 @@ input{
     background-color: white;    
     
     font-size:18px;
-    font-weight: bold;
+    font-weight: normal;
     display: inline-block;
     text-align: left;
 }
@@ -122,7 +123,9 @@ input{
     padding: 10px;
     font-size: 25px;
     font-weight: bold;
-    left: 220px;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
 }
 
 #icon{
@@ -154,6 +157,17 @@ input{
     font-size: 20px;
     font-weight: lighter; 
     right: 20px;
+}
+
+#windPic{
+    position: absolute;
+    bottom: 30px;
+    margin: 5px;
+    right: 130px;
+    height: 40px;
+    width: 40px;
+    
+    
 }
 
 #day{

@@ -35,12 +35,13 @@ const loadEvent = function() {
   // Display the fetched data in the Browser
 
       const displayData = (data) =>{
-        rootElement2.insertAdjacentHTML('beforeend', `<p id="cityName">${data.location.name}</p>`);
+        rootElement2.insertAdjacentHTML('beforeend', `<p id="cityName">${data.location.name.toUpperCase()}</p>`);
         rootElement2.insertAdjacentHTML('beforeend', `<p id="temperature">${data.current["temp_c"]} °C</p>`);
         rootElement2.insertAdjacentHTML('beforeend', `<p id="condition">${data.current.condition.text}</p>`);
         rootElement2.insertAdjacentHTML('beforeend', `<img id="icon" src="${data.current.condition.icon}"></img>`);
         rootElement2.insertAdjacentHTML('beforeend', `<p id="localtime">${data.location.localtime}</p>`);
         rootElement2.insertAdjacentHTML('beforeend', `<p id="windSpeed">${data.current["wind_kph"]} km/h</p>`);
+        rootElement2.insertAdjacentHTML('beforeend', `<img id="windPic" src="wind_icon.png"></img>`);
         rootElement2.insertAdjacentHTML('beforeend', `<p id="day">${DAYS[addWeekday(data.location.localtime.slice(0, 10))]}</p>`);
       }
 
@@ -127,8 +128,16 @@ const loadEvent = function() {
         }
       })
       
-      // Fetch the weather data and load it to the HTML, favourites button visible, put favourites as options in the datalist 
+  // Fetch the weather data and load it to the HTML, favourites button visible, put favourites as options in the datalist 
       document.getElementById("input").addEventListener('change', (e) => {
+        if (favourites.includes(e.target.value)){
+          rootElement2.textContent = "";
+            loadSpinner();
+            fetchCityData(e.target.value);
+            fetchBackgroundPicture(e.target.value);
+            currentCity = e.target.value;
+            document.getElementById("favourites").style.visibility = "visible";
+        } else {
         for(let city of cities){
           if(city.name === e.target.value){
             rootElement2.textContent = "";
@@ -138,7 +147,8 @@ const loadEvent = function() {
             currentCity = city.name;
             document.getElementById("favourites").style.visibility = "visible";
           }
-        }      
+        }  
+      }    
         if (document.getElementById("input").value.length === 0 && favourites.length !== 0){
           favourites.forEach(element => {
             document.getElementById("datalist").insertAdjacentHTML("beforeend", `<option id="${element}" value="${element}">`)
@@ -162,8 +172,6 @@ const loadEvent = function() {
       }
     })
 
-
-  //
 }
 
 
