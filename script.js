@@ -40,8 +40,8 @@ const loadEvent = function() {
         rootElement2.insertAdjacentHTML('beforeend', `<p id="condition">${data.current.condition.text}</p>`);
         rootElement2.insertAdjacentHTML('beforeend', `<img id="icon" src="${data.current.condition.icon}"></img>`);
         rootElement2.insertAdjacentHTML('beforeend', `<p id="localtime">${data.location.localtime}</p>`);
-        rootElement2.insertAdjacentHTML('beforeend', `<p id="windSpeed">${data.current["wind_kph"]}</p>`);
-        rootElement2.insertAdjacentHTML('beforeend', `<img id="windPic" src="wind.jpg"></img>`);
+        rootElement2.insertAdjacentHTML('beforeend', `<p id="windSpeed">${data.current["wind_kph"]} km/h</p>`);
+        rootElement2.insertAdjacentHTML('beforeend', `<img id="windPic" src="wind_icon.png"></img>`);
         rootElement2.insertAdjacentHTML('beforeend', `<p id="day">${DAYS[addWeekday(data.location.localtime.slice(0, 10))]}</p>`);
       }
 
@@ -68,12 +68,12 @@ const loadEvent = function() {
       const fetchBackgroundPicture = (city) =>{
         try{
           fetch(`${backgroundUrl}${city}`, {headers: {
-            Authorization: "ZIjVFWMjcK93QIV1E5WGsyMLRRs3Kvmcc3ONvbeasPvzAxGGwOZ9hhZz"
+            Authorization: backgroundApiKey
           }})
           .then(response=>response.json())
           .then(data=>{   
             (data.photos.length > 0) ?    
-            rootElement.style.backgroundImage = `url("${data.photos[0].src.portrait}")`
+            rootElement.style.backgroundImage = `url("${data.photos[0].src.large}")`
              : rootElement.style.backgroundImage = `url("forecast_medium_size.jpg")`;
           })
         }catch(error){
@@ -128,7 +128,7 @@ const loadEvent = function() {
         }
       })
       
-      // Fetch the weather data and load it to the HTML, favourites button visible, put favourites as options in the datalist 
+  // Fetch the weather data and load it to the HTML, favourites button visible, put favourites as options in the datalist 
       document.getElementById("input").addEventListener('change', (e) => {
         for(let city of cities){
           if(city.name === e.target.value){
@@ -163,8 +163,6 @@ const loadEvent = function() {
       }
     })
 
-
-  //
 }
 
 

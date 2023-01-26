@@ -21,6 +21,7 @@ body{
     background-image: url("forecast_medium_size.jpg");
     background-clip: padding-box;
     background-position: center center;
+
     border-radius: 20px;
 
     position: relative;   
@@ -162,8 +163,7 @@ input{
     position: absolute;
     bottom: 30px;
     margin: 5px;
-    padding: 10px;
-    right: 50px;
+    right: 130px;
     height: 40px;
     width: 40px;
     
