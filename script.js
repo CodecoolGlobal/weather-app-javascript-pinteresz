@@ -111,7 +111,7 @@ const loadEvent = function() {
           }
       }
 
-   // DOM: city option elements  
+  // DOM: city option elements  
       let optionElement = function (city){
         return `<option id="${city.name}" value="${city.name}">`
       }
