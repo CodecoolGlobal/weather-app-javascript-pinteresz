@@ -118,9 +118,10 @@ const loadEvent = function() {
       
 
   // Input field autocomplete feature
-       document.getElementById("input").addEventListener('keyup', (e) => {
+       document.getElementById("input").addEventListener('input', (e) => {
         for (let i = 97; i <= 122; i++){
-          if(document.getElementById("input").value.length >= 3 && e.key.charCodeAt(0) === i ){
+          if(document.getElementById("input").value.length >= 3 && e.target.value.charCodeAt(e.target.value[e.target.value.length-1]) === i ){
+            console.log("asd");
             document.querySelectorAll('option').forEach(option => option.remove())
             qParameter = document.getElementById("input").value
             fetchWeatherData()
