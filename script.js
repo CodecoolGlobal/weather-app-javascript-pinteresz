@@ -136,7 +136,6 @@ const loadEvent = function() {
             fetchCityData(e.target.value);
             fetchBackgroundPicture(e.target.value);
             currentCity = e.target.value;
-            document.getElementById("favourites").style.visibility = "visible";
         } else {
         for(let city of cities){
           if(city.name === e.target.value){
@@ -169,6 +168,7 @@ const loadEvent = function() {
     document.getElementById("favourites").addEventListener('click', () => {
       if(!favourites.includes(currentCity)){
       favourites.push(currentCity);
+      document.getElementById("favourites").style.visibility = "hidden";
       console.log(favourites);
       }
     })
